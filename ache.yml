@@ -1,0 +1,54 @@
+#
+# Example of configuration for crawling all pages of the web sites in the seeds
+#
+
+# Enables "scope" to only crawl pages that belong to domains of seed URLs
+link_storage.link_strategy.use_scope: true
+link_storage.link_classifier.type: MaxDepthLinkClassifier
+link_storage.link_classifier.max_depth: 10
+
+# Select URLs from all domains during link selection phase,
+#link_storage.link_selector: MaximizeWebsitesLinkSelector
+
+# Configure the minimum time interval (in milliseconds) to wait between requests
+# to the same host to avoid overloading servers. If you are crawling your own
+# web site, you can descrease this value to speed-up the crawl.
+link_storage.scheduler.host_min_access_interval: 2000
+
+# Enables discovery of links using the Sitemaps protocol
+link_storage.download_sitemap_xml: true
+
+# Configure the User-Agent of the crawler
+crawler_manager.downloader.user_agent.name: ACHE
+crawler_manager.downloader.user_agent.url: https://github.com/ViDA-NYU/ache
+
+#target_storage.data_format.type: WARC                    # enable WARC file format
+#target_storage.data_format.warc.compress: true           # enable GZIP compression
+#target_storage.data_format.warc.max_file_size: 262144000 # maximum file size in bytes
+
+# Configure ELASTICSEARCH and FILES data formats
+target_storage.data_formats: 
+  - KAFKA
+target_storage.data_format.kafka.topic_name: nuix-topic-fb01
+target_storage.data_format.kafka.properties:
+  # Add here properties for configuring the Kafka client
+  bootstrap.servers: "172.20.10.7:9092"
+  target_storage.data_format.kafka.format:
+  - ELASTIC
+
+#
+# Configurations for crawling using cookies
+#
+#crawler_manager.downloader.cookies:
+#- domain: mobile.facebook.com
+#  cookie: datr=ZiKSWgKZs8PK_yO-bzplKGQn; sb=ciKSWlNBNCnMfakuYkjvJjEb; locale=en_US; dpr=2; m_pixel_ratio=2; c_user=100008154398782; xs=112%3A6jgclELl7chRTw%3A2%3A1558375554%3A-1%3A-1; x-referer=eyJyIjoiL2ZyaWVuZHMvY2VudGVyL3N1Z2dlc3Rpb25zLz9tZmZfbmF2PTEiLCJoIjoiL2ZyaWVuZHMvY2VudGVyL3N1Z2dlc3Rpb25zLz9tZmZfbmF2PTEiLCJzIjoibW9iaWxlIn0%3D; wd=1680x948; fr=0TCNRRp4CyuurQgi0.AWUzYQnzpkK7CKeqaTJDK88A5f0.Bakg5F.Cg.AAA.0.0.Bc5CSr.AWW3GkPH
+#   cookie: datr=ZiKSWgKZs8PK_yO-bzplKGQn; sb=ciKSWlNBNCnMfakuYkjvJjEb; c_user=629627264; xs=212%3AicjGSSn4o1mKBg%3A2%3A1519526514%3A856%3A2629; m_pixel_ratio=2; spin=r.1000476892_b.trunk_t.1552074068_s.1_v.2_; presence=EDvF3EtimeF1552076712EuserFA2629627264A2EstateFDt3F_5b_5dG552076712558Elm3FnullEutc3F0CEchFDp_5f629627264F81CC; fr=0TCNRRp4CyuurQgi0.AWV3MUvHBUf04FhJjrzq9rByQyk.Bakg5F.Cg.AAA.0.0.Bcgzc8.AWVO04l7; wd=1680x867; x-referer=eyJyIjoiL3N0ZXBoZW4ubC5zdGV3YXJ0LjkiLCJoIjoiL3N0ZXBoZW4ubC5zdGV3YXJ0LjkiLCJzIjoibW9iaWxlIn0%3D
+# - domain: example2.com
+#   cookie: key1=value; key2=value2;
+
+#
+# Some cookies only work with the same user-agent string that created it.
+# You can set it using the following config line:pw
+#
+#crawler_manager.downloader.user_agent.string: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36
+#crawler_manager.downloader.user_agent.string: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36
