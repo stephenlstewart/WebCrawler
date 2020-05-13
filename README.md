@@ -8,3 +8,10 @@ https://github.com/VIDA-NYU/ache
 ```
 docker run -p 8080:8080 vidanyu/ache:latest
 ```
+
+
+##Kakfa Setting for Nuix
+```
+Zookeeper - 127.0.0.1:2181
+Bootstrap.servers - 127.0.0.1:9092
+```
